@@ -6,7 +6,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 HELP.md
-./server/src/main/resources/application.yml
+application.yml
 
 # User-specific stuff
 *.idea
