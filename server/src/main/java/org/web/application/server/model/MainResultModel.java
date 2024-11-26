@@ -10,8 +10,10 @@ import java.sql.Timestamp;
 @Setter
 @Builder
 public class MainResultModel {
-    private String avatarUrl;
+    private String user_id;
     private String name;
-    private Timestamp attendanceTime;
-    private Timestamp leaveTime;
+    private String state;
+    private String imgUrl;
+    private Timestamp attendance_time;
+    private Timestamp leave_time;
 }
