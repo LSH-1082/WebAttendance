@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface MainRepository {
-    List<MainResultModel> findByDuration(Timestamp start, Timestamp end);
+    List<MainResultModel> findByDuration(String start, String end);
     List<MainResultModel> findByYearMonth(String yearMonth);
 }

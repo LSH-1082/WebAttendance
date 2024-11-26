@@ -4,7 +4,7 @@
 
 <mapper namespace="org.web.application.server.repository.MainRepository">
 
-    <select id="findByDuration" resultType="MainResultModel">
+    <select id="findByDuration" resultType="mainResultModel">
         SELECT e.user_id, name, state, img_url, attendance_time, leave_time
         FROM employee e
         JOIN work_time w ON e.user_id = w.user_id
@@ -12,10 +12,10 @@
         ORDER BY attendance_time DESC;
     </select>
 
-    <select id="findByYearMonth" resultType="MainResultModel">
+    <select id="findByYearMonth" resultType="mainResultModel">
         SELECT e.user_id, name, state, img_url, attendance_time, leave_time
         FROM employee e
-        JOIN w ON e.user_id = w.user_id
+        JOIN work_time w ON e.user_id = w.user_id
         WHERE attendance_time LIKE CONCAT(#{yearMonth}, '%')
         ORDER BY attendance_time ASC;
     </select>
