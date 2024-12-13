@@ -1,8 +1,10 @@
+import MainPage from "./Pages/MainPage";
+
 function App() {
-  return(
-    <div>
-      <h1>adfasfsa</h1>
-    </div>
+return(
+    <>
+      <MainPage/>
+    </>
   );
 }
 export default App;
