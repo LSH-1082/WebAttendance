@@ -17,6 +17,6 @@
         FROM employee e
         JOIN work_time w ON e.user_id = w.user_id
         WHERE attendance_time LIKE CONCAT(#{yearMonth}, '%')
-        ORDER BY attendance_time ASC;
+        ORDER BY attendance_time DESC;
     </select>
 </mapper>

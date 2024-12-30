@@ -24,8 +24,8 @@ public class MainService {
         return mainRepository.findByDuration(start, end);
     }
 
-    public List<MainResultModel> searchByYearMonth(MainSearchDTO mainSearchDTO) {
-        String yearMonth = mainSearchDTO.getStartYear() + "-" + mainSearchDTO.getStartMonth();
+    public List<MainResultModel> searchByYearMonth(int year, int month) {
+        String yearMonth = year + "-" + month;
         return mainRepository.findByYearMonth(yearMonth);
     }
 }
