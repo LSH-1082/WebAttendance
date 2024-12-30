@@ -28,12 +28,14 @@ const mainListItems = [
     { text: 'Home', icon: <HomeRoundedIcon /> },
     { text: 'People', icon: <PeopleRoundedIcon /> },
     { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  ];
+];
   
-  const secondaryListItems = [
+const secondaryListItems = [
     { text: 'About', icon: <InfoRoundedIcon /> },
     { text: 'Feedback', icon: <HelpRoundedIcon /> },
-  ];
+];
+
+
 
 export default function MenuContent() {
     const dispatch = useDispatch();
@@ -45,8 +47,8 @@ export default function MenuContent() {
             {mainListItems.map((item, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                 <ItemButton 
-                    selected={index === page}
-                    onClick={() => dispatch(setPage(index))}
+                    selected={page === item.text }
+                    onClick={() => dispatch(setPage(item.text))}
                 >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
