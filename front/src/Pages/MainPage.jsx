@@ -1,27 +1,35 @@
-import { useSelector } from "react-redux";
-import MainTemplates from "../Templates/MainTemplates";
-import Box from '@mui/material/Box';
+import HomeTemplates from "../Templates/HomeTemplates";
 import SideMenu from "../Components/SideMenu";
+import Header from "../Components/Header";
+import { 
+    Stack,
+    Box
+} from "@mui/material";
+import { useSelector } from "react-redux";
 
-const MainPage = () => {
-    const page = useSelector(state => state.page.page);
+function MainPage() {
+   const page = useSelector(state => state.page.page);
 
     let content;
 
-    if(page === 0)
-        content = <MainTemplates/>
-    else if(page === 1)
+    if(page === "Home")
+        content = <HomeTemplates/>
+    else if(page === "People")
         content = <><h1>1</h1></>
-    else if(page === 2)
+    else if(page === "Analytics")
         content = <><h1>2</h1></>
 
 
     return(
         <Box sx={{display: 'flex'}}>
             <SideMenu />
-            {content}
+            <Stack sx={{width: '100%', marginRight: '20px', marginLeft: '20px'}}>
+                <Header/>
+                <Box sx={{width: '100%', height: '90vh', overflow: 'auto'}}>
+                    {content}
+                </Box>
+            </Stack>
         </Box>
     );
 }
-
 export default MainPage;

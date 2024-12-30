@@ -9,12 +9,13 @@ import org.web.application.server.service.MainService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/main")
+@CrossOrigin("http://localhost:3000")
 public class MainController {
     private final MainService mainService;
 
     @GetMapping("/yearMonth")
-    public ResponseEntity<?> getYearMonth(@RequestBody MainSearchDTO mainSearchDTO) {
-        return ResponseEntity.ok(mainService.searchByYearMonth(mainSearchDTO));
+    public ResponseEntity<?> getYearMonth(@RequestParam int year, @RequestParam int month) {
+        return ResponseEntity.ok(mainService.searchByYearMonth(year, month));
     }
 
     @GetMapping("/duration")
