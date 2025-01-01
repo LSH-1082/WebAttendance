@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
 import { searchByYearMonth } from '../Apis/searchApi';
 import { setListData } from '../stores/listData';
+import { useLocation } from 'react-router-dom';
 
 const P = styled('p')({
     fontSize: '20px',
@@ -15,10 +16,13 @@ const P = styled('p')({
 
 const Header = () => {
     const dispatch = useDispatch();
-    const page = useSelector(state => state.page.page);
     const date = useSelector(state => state.date.date);
+    const path = useLocation().pathname.split('/');
+    let content;
 
-    function clickSearchButton() {
+    content = path[2] !== undefined ? `${path[1]}/${path[2]}` : path[1];
+
+    function searchWorkTime() {
         let year = date.split("-")[0];
         let month = date.split("-")[1];
         let searchData = {
@@ -37,11 +41,11 @@ const Header = () => {
             display: 'flex',
             justifyContent: 'space-between',
         }}>
-            <P>{page}</P>
+            <P>{path[1] === "" ? 'Home' : content}</P>
             <Stack direction="row" sx={{ gap: 1, alignItems: 'center' }}>
-                {page === 'People' ? (<Search/>) : (<CustomDatePicker />)}
+                {path[1] === 'People' ? (<Search/>) : (<CustomDatePicker />)}
                 <IconButton 
-                onClick={() => clickSearchButton()}
+                onClick={() => path[1] === 'People' ? console.log(path) : searchWorkTime() }
                 sx={{
                     borderRadius: '10px'
                 }}>

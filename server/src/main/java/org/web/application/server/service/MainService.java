@@ -25,7 +25,7 @@ public class MainService {
     }
 
     public List<MainResultModel> searchByYearMonth(int year, int month) {
-        String yearMonth = year + "-" + month;
+        String yearMonth = month < 10 ? year + "-0" + month : year + "-" + month;
         return mainRepository.findByYearMonth(yearMonth);
     }
 }

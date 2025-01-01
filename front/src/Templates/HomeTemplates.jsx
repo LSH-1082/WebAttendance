@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import WorkTimeList from '../Components/workTimeList';
+import { useSelector } from 'react-redux';
+import WorkTimeList from '../Components/WorkTimeList';
 
 const MainTemplates = () => {  
     const listData = useSelector((state) => state.listData.listData);

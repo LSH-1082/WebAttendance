@@ -1,6 +1,5 @@
+import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPage } from '../stores/page';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -35,11 +34,9 @@ const secondaryListItems = [
     { text: 'Feedback', icon: <HelpRoundedIcon /> },
 ];
 
-
-
 export default function MenuContent() {
-    const dispatch = useDispatch();
-    const page = useSelector(state => state.page.page);
+    const navigate = useNavigate();
+    const page = useLocation().pathname.split('/')[1];
 
     return (
         <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
@@ -47,8 +44,8 @@ export default function MenuContent() {
             {mainListItems.map((item, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                 <ItemButton 
-                    selected={page === item.text }
-                    onClick={() => dispatch(setPage(item.text))}
+                    selected={ item.text === 'Home' ? page === '' : page === `${item.text}` }
+                    onClick={() => item.text === 'Home' ? navigate('/') : navigate(`/${item.text}`)}
                 >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
