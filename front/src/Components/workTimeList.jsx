@@ -10,22 +10,28 @@ import {
         Avatar
     } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const WorkTimeList = (props) => {  
-    const listData = props.listData
+    const homeListData = props.homeListData
+    const page = useSelector((state) => state.page.page);
     const navigate = useNavigate();
+
+    const itemsPerPage = 10;
+    const startIndex = (page - 1) * itemsPerPage;
+    const currentPageData = homeListData.slice(startIndex, startIndex + itemsPerPage);
 
     function printNameTextComponent(obj) {
         let hours = dayjs(obj.leave_time).diff(dayjs(obj.attendance_time), 'hour');
         let minutes = dayjs(obj.leave_time).diff(dayjs(obj.attendance_time), 'minute') % 60;
-        let content;
+        let text;
 
         if(obj.leave_time === null) 
-            content = obj.state + "중";
+            text = obj.state + "중";
         else if(hours !== 0) 
-            content = hours + "시간 " + minutes + "분";
+            text = "근무시간: " + hours + "시간 " + minutes + "분";
         else 
-            content = minutes + "분";
+            text = "근무시간: " + minutes + "분";
 
         return(
             <ListItemText 
@@ -37,7 +43,7 @@ const WorkTimeList = (props) => {
                             variant="body2"
                             sx={{ color: 'text.primary', display: 'inline' }}
                         >
-                        {content}
+                        {text}
                         </Typography>
                     </React.Fragment>
                 }
@@ -46,9 +52,9 @@ const WorkTimeList = (props) => {
     }
 
     return(
-        listData.map((obj, index) => (
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={index}>
-                <ListItemButton alignItems="center" sx={{borderRadius: "15px"}}
+        currentPageData.map((obj, index) => (
+            <List sx={{ bgcolor: 'background.paper' }} key={index}>
+                <ListItemButton alignItems="center" sx={{ borderRadius: "15px"}}
                     onClick={() => navigate(`/People/${obj.name}`)}
                 >
                     <ListItemAvatar>

@@ -1,4 +1,4 @@
-import HomeTemplates from "../Templates/HomeTemplates";
+import HomeTemplate from "../Templates/HomeTemplate";
 import SideMenu from "../Components/SideMenu";
 import Header from "../Components/Header";
 import { 
@@ -15,7 +15,7 @@ function MainPage() {
     let content;
 
     if(page === "/")
-        content = <HomeTemplates/>
+        content = <HomeTemplate/>
     else if(page === "/People")
         content = <PeopleTemplate/>
     else if(userName !== undefined)
@@ -26,11 +26,15 @@ function MainPage() {
     return(
         <Box sx={{display: 'flex'}}>
             <SideMenu />
-            <Stack sx={{width: '100%', marginRight: '20px', marginLeft: '20px'}}>
-            <Header/>
-                <Box sx={{width: '100%', height: '90vh', overflow: 'auto'}}>
-                    {content}
-                </Box>
+            <Stack sx={{
+                display: 'flex', 
+                width: '100%', 
+                marginRight: '20px', 
+                marginLeft: '20px', 
+                height: '100vh',
+                }}>
+                <Header/>
+                {content}
             </Stack>
         </Box>
     );

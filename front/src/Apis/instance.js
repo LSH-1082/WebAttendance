@@ -9,4 +9,4 @@ const instance = axios.create({
     }
 });
 
-export const searchByYearMonth = date => instance.get("/main/yearMonth", {params: date});
+export default instance;
