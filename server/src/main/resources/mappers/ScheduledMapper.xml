@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.web.application.server.repository.ScheduledRepository">
+    <update id="updateLeaveTime">
+        UPDATE work_time
+        SET leave_time = {midnightTime}
+        WHERE leave_time IS NULL
+    </update>
+    <insert id="insertAttendanceTime">
+        INSERT INTO work_time (user_id, attendance_time, leave_time)
+        VALUES (#{userId}, #{startTime}, NULL)
+    </insert>
+    <select id="getBeforeLeaveUserId" resultType="String">
+        SELECT user_id
+        FROM employee
+        WHERE state="출근"
+    </select>
+</mapper>

@@ -17,6 +17,7 @@
                                         ELSE TIMESTAMPDIFF(MINUTE, w.attendance_time, w.leave_time)
                                         END
                             )
+
                      FROM work_time w
                      WHERE w.user_id = e.user_id
                        AND w.attendance_time LIKE CONCAT(#{yearMonth}, '%')),
