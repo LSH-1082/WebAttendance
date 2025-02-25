@@ -2,50 +2,65 @@ import * as React from 'react';
 import dayjs from 'dayjs';
 import {
         Stack, 
-        ListItemButton,
+        ListItem,
         List,
         ListItemText,
         ListItemAvatar,
         Typography,
         Avatar
     } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPage } from '../stores/page';
+import { useSelector } from 'react-redux';
 
 const WorkTimeList = (props) => {  
-    const listData = props.listData
-    const dispatch = useDispatch();
+    const homeListData = props.homeListData
+    const page = useSelector((state) => state.page.page);
 
-    //검색버튼 클릭 후 상태변화시 다시 랜더링
-    React.useEffect(() => {
-        console.log("Updated listData from Redux:", listData);
-    }, [listData]);
+    const itemsPerPage = 10;
+    const startIndex = (page - 1) * itemsPerPage;
+    const currentPageData = homeListData.slice(startIndex, startIndex + itemsPerPage);
 
-    function clickProfile(userId) {
-        dispatch(setPage("People"));
-    }
+    function printNameTextComponent(obj) {
+        let hours = dayjs(obj.leave_time).diff(dayjs(obj.attendance_time), 'hour');
+        let minutes = dayjs(obj.leave_time).diff(dayjs(obj.attendance_time), 'minute') % 60;
+        let text;
 
-    function calculateDuration(start, end, callback){
-        let hours = dayjs(end).diff(dayjs(start), 'hour');
-        let minutes = dayjs(end).diff(dayjs(start), 'minute') % 60;
-        let data = {
-            'hours': hours,
-            'minutes': minutes
-        }
-        return data;
+        if(obj.leave_time === null) 
+            text = obj.state + "중";
+        else if(hours !== 0) 
+            text = "근무시간: " + hours + "시간 " + minutes + "분";
+        else 
+            text = "근무시간: " + minutes + "분";
+
+        return(
+            <ListItemText 
+                primary={obj.name}
+                secondary={
+                    <React.Fragment>
+                        <Typography
+                            component="span"
+                            variant="body2"
+                            sx={{ color: 'text.primary', display: 'inline' }}
+                        >
+                        {text}
+                        </Typography>
+                    </React.Fragment>
+                }
+            />
+        );
     }
 
     return(
-        listData.map((obj, index) => (
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={index}>
-                    <ListItemButton alignItems="center" sx={{borderRadius: "15px"}}
-                        onClick={() => clickProfile(obj.user_id)}
-                    >
-                        <ListItemAvatar>
-                            <Avatar alt="Remy Sharp" src={obj.imgUrl} />
-                        </ListItemAvatar>
-                        <ListItemText 
-                            primary={obj.name}
+        currentPageData.map((obj, index) => (
+            <List sx={{ bgcolor: 'background.paper' }} key={index}>
+                <ListItem alignItems="center" sx={{ borderRadius: "15px"}}>
+                    <ListItemAvatar>
+                        <Avatar alt="Remy Sharp" src={obj.imgUrl} />
+                    </ListItemAvatar>
+                    {printNameTextComponent(obj)}
+                    <Stack direction="row" gap={5} >
+                        <ListItemText
+                            sx={{width: "100px"}}
+                            primary="출근시간"
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -53,49 +68,30 @@ const WorkTimeList = (props) => {
                                         variant="body2"
                                         sx={{ color: 'text.primary', display: 'inline' }}
                                     >
-                                        근무시간: {
-                                            calculateDuration(obj.attendance_time, obj.leave_time).hours != 0 ? 
-                                            calculateDuration(obj.attendance_time, obj.leave_time). hours + "시간 " : ""}
-                                        {calculateDuration(obj.attendance_time, obj.leave_time).minutes}분
+                                        {dayjs(obj.attendance_time).format('DD일 HH시 mm분')}
                                     </Typography>
                                 </React.Fragment>
                             }
                         />
-                        <Stack direction="row" gap={5} >
-                            <ListItemText
-                                sx={{width: "100px"}}
-                                primary="출근시간"
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            sx={{ color: 'text.primary', display: 'inline' }}
-                                        >
-                                            {dayjs(obj.attendance_time).format('DD일 HH시 mm분')}
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                            />
-                            <ListItemText
-                                primary="퇴근시간"
-                                sx={{
-                                    marginRight: obj.leave_time === null ? '40px' : 0
-                                }}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            component="span"
-                                            variant="body2"
-                                            sx={{ color: 'text.primary', display: 'inline' }}
-                                        >
-                                            {obj.leave_time != null ? (dayjs(obj.leave_time).format('DD일 HH시 mm분')) : ("출근중")}
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                            />
-                        </Stack>
-                    </ListItemButton>
+                        <ListItemText
+                            primary="퇴근시간"
+                            sx={{
+                                marginRight: obj.leave_time === null ? '37px' : 0
+                            }}
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        sx={{ color: 'text.primary', display: 'inline' }}
+                                    >
+                                        {obj.leave_time != null ? (dayjs(obj.leave_time).format('DD일 HH시 mm분')) : ("출근중")}
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                        />
+                    </Stack>
+                </ListItem>
             </List>
         ))
     );

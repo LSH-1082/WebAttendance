@@ -1,33 +1,40 @@
-import HomeTemplates from "../Templates/HomeTemplates";
+import HomeTemplate from "../Templates/HomeTemplate";
 import SideMenu from "../Components/SideMenu";
 import Header from "../Components/Header";
 import { 
     Stack,
     Box
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
+import PeopleTemplate from "../Templates/PeopleTemplate";
 
 function MainPage() {
-   const page = useSelector(state => state.page.page);
+    const page = useLocation().pathname;
+    const { userName } = useParams();
 
     let content;
 
-    if(page === "Home")
-        content = <HomeTemplates/>
-    else if(page === "People")
-        content = <><h1>1</h1></>
-    else if(page === "Analytics")
+    if(page === "/")
+        content = <HomeTemplate/>
+    else if(page === "/People")
+        content = <PeopleTemplate/>
+    else if(userName !== undefined)
+        content = <PeopleTemplate userName={userName}/>
+    else if(page === "/Analytics")
         content = <><h1>2</h1></>
-
 
     return(
         <Box sx={{display: 'flex'}}>
             <SideMenu />
-            <Stack sx={{width: '100%', marginRight: '20px', marginLeft: '20px'}}>
+            <Stack sx={{
+                display: 'flex', 
+                width: '100%', 
+                marginRight: '20px', 
+                marginLeft: '20px', 
+                height: '100vh',
+                }}>
                 <Header/>
-                <Box sx={{width: '100%', height: '90vh', overflow: 'auto'}}>
-                    {content}
-                </Box>
+                {content}
             </Stack>
         </Box>
     );

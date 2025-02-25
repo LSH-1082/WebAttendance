@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Builder
-public class MainResultModel {
+public class HomeResultModel {
     private String user_id;
     private String name;
     private String state;

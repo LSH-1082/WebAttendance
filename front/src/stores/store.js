@@ -1,14 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import pageReducer from './page';
 import dateReducer from './date';
-import listDataReducer from './listData';
+import pageReducer from './page';
+import peopleDataReducer from './peopleData';
+import homeListDataReducer from './homeListData';
+import peopleListDataReducer from './peopleListData';
 
 // store 설정
 const store = configureStore({
   reducer: {
-    page: pageReducer,
     date: dateReducer, 
-    listData: listDataReducer, 
+    page: pageReducer, 
+    peopleData: peopleDataReducer, 
+    peopleListData: peopleListDataReducer, 
+    homeListData: homeListDataReducer, 
   },
 });
 
