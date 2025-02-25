@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.web.application.server.repository.HomeRepository">
+    <select id="findByYearMonth" resultType="homeResultModel">
+        SELECT e.user_id, name, state, img_url, attendance_time, leave_time
+        FROM employee e
+        JOIN work_time w ON e.user_id = w.user_id
+        WHERE attendance_time LIKE CONCAT(#{yearMonth}, '%')
+        ORDER BY attendance_time DESC;
+    </select>
+</mapper>
