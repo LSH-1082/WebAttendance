@@ -1,6 +1,6 @@
 <div align='center'>
    
-   # 👨‍✈️ WebAttendance
+   # 👨 WebAttendance
    동아리의 근태 관리를 효율적으로 수행하기 위한 웹 애플리케이션
    
   <img src="https://img.shields.io/badge/status-active-brightgreen" alt="Project Status">
