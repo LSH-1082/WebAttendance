@@ -11,10 +11,10 @@ import org.web.application.server.service.HomeService;
 @RequestMapping("/home")
 @CrossOrigin("http://localhost:3000")
 public class HomeController {
-    private final HomeService mainService;
+    private final HomeService homeService;
 
     @GetMapping("/yearMonth")
     public ResponseEntity<?> getYearMonth(@RequestParam int year, @RequestParam int month) {
-        return ResponseEntity.ok(mainService.searchByYearMonth(year, month));
+        return ResponseEntity.ok(homeService.searchByYearMonth(year, month));
     }
 }

@@ -16,4 +16,9 @@ public class PeopleController {
     public ResponseEntity<?> getPeopleList() {
         return ResponseEntity.ok(peopleService.getPeopleList());
     }
+
+    @GetMapping("/workTimeData")
+    public ResponseEntity<?> getWorkTimeData(@RequestParam String userId){
+        return ResponseEntity.ok(peopleService.getWorkTimeData(userId));
+    }
 }

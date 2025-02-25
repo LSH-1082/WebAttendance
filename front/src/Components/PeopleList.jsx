@@ -11,12 +11,18 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPeopleListData } from '../Stores/peopleListData';
+import { setDefaultPeopleData } from '../Stores/peopleData';
 import { getPeopleList } from '../Apis/peopleSearchApi';
 
 const PeopleList = () => {  
     const dispatch = useDispatch();
-    const peopleListData = useSelector((state) => state.peopleListData.peopleListData);
     const navigate = useNavigate();
+    const peopleListData = useSelector((state) => state.peopleListData.peopleListData);
+
+    function clickListItem(obj){
+        dispatch(setDefaultPeopleData(obj)); 
+        navigate(`/People/${obj.name}`);
+    }
 
     function calculateMonthTime(obj) {
         let monthHour = parseInt(obj.month_work_time / 60);
@@ -58,10 +64,10 @@ const PeopleList = () => {
         peopleListData.map((obj, index) => (
             <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={index}>
                 <ListItemButton alignItems="center" sx={{borderRadius: "15px"}}
-                    onClick={() => navigate(`/People/${obj.name}`)}
+                    onClick={() => clickListItem(obj)}
                 >
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src={obj.imgUrl} />
+                        <Avatar alt={obj.name} src={obj.imgUrl} />
                     </ListItemAvatar>
                     <ListItemText 
                         primary={obj.name}
@@ -80,7 +86,7 @@ const PeopleList = () => {
                     <Stack direction="row" gap={5} >
                         <ListItemText
                             sx={{width: "100px"}}
-                            primary="당월 근무시간"
+                            primary="금월 근무시간"
                             secondary={
                                 <React.Fragment>
                                     <Typography

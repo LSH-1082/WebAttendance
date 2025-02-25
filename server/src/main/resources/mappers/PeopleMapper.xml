@@ -4,7 +4,7 @@
 
 <mapper namespace="org.web.application.server.repository.PeopleRepository">
 
-    <select id="getPeopleList" resultType="peopleResultModel">
+    <select id="getPeopleList" resultType="PeopleResultModel">
         SELECT
             e.user_id,
             e.name,
@@ -36,5 +36,11 @@
                     0
             ) AS total_work_time
         FROM employee e;
+    </select>
+
+    <select id="getWorkTimeData" resultType="PeopleWorkTimeResultModel">
+        SELECT attendance_time, leave_time
+        FROM work_time
+        WHERE user_id = #{userId} AND attendance_time BETWEEN #{startDate} AND #{endDate}
     </select>
 </mapper>

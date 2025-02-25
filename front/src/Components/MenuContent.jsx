@@ -9,10 +9,12 @@ import {
     Stack,
 } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
+// import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import { useState } from 'react';
+import CustomModal from './AboutModal';
 
 const ItemButton = styled(ListItemButton)({
     borderRadius: '12px',
@@ -28,7 +30,7 @@ const ItemButton = styled(ListItemButton)({
 const mainListItems = [
     { text: 'Home', icon: <HomeRoundedIcon /> },
     { text: 'People', icon: <PeopleRoundedIcon /> },
-    { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
+    // { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
 ];
   
 const secondaryListItems = [
@@ -39,6 +41,18 @@ const secondaryListItems = [
 export default function MenuContent() {
     const navigate = useNavigate();
     const page = useLocation().pathname.split('/')[1];
+    const [modalType, setModalType] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const closeModal = () => setIsModalOpen(false);
+
+    function clickAbout() {
+        setModalType("About");
+        setIsModalOpen(true);
+    }
+    function clickFeedback() {
+        setModalType("Feedback");
+        setIsModalOpen(true);
+    }
 
     return (
         <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
@@ -59,13 +73,14 @@ export default function MenuContent() {
             <List dense>
                 {secondaryListItems.map((item, index) => (
                 <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-                    <ItemButton>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
+                    <ItemButton onClick={() => item.text === 'About' ? clickAbout() : clickFeedback()}>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.text} />
                     </ItemButton>
                 </ListItem>
                 ))}
             </List>
+            <CustomModal isOpen={isModalOpen} handleClose={closeModal} type={modalType}></CustomModal>
         </Stack>
   );
 }

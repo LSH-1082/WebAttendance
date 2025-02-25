@@ -1,3 +1,4 @@
+import PeopleAnalytics from "../Components/PeopleAnalytics";
 import PeopleList from "../Components/PeopleList";
 
 const PeopleTemplate = (props) => {
@@ -7,7 +8,7 @@ const PeopleTemplate = (props) => {
         userName === undefined ? (
             <PeopleList/>
         ) : (
-            <><h1>{userName}</h1></>
+            <PeopleAnalytics/>
         )
     );
 }

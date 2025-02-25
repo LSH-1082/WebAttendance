@@ -2,20 +2,18 @@ import * as React from 'react';
 import dayjs from 'dayjs';
 import {
         Stack, 
-        ListItemButton,
+        ListItem,
         List,
         ListItemText,
         ListItemAvatar,
         Typography,
         Avatar
     } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const WorkTimeList = (props) => {  
     const homeListData = props.homeListData
     const page = useSelector((state) => state.page.page);
-    const navigate = useNavigate();
 
     const itemsPerPage = 10;
     const startIndex = (page - 1) * itemsPerPage;
@@ -54,9 +52,7 @@ const WorkTimeList = (props) => {
     return(
         currentPageData.map((obj, index) => (
             <List sx={{ bgcolor: 'background.paper' }} key={index}>
-                <ListItemButton alignItems="center" sx={{ borderRadius: "15px"}}
-                    onClick={() => navigate(`/People/${obj.name}`)}
-                >
+                <ListItem alignItems="center" sx={{ borderRadius: "15px"}}>
                     <ListItemAvatar>
                         <Avatar alt="Remy Sharp" src={obj.imgUrl} />
                     </ListItemAvatar>
@@ -95,7 +91,7 @@ const WorkTimeList = (props) => {
                             }
                         />
                     </Stack>
-                </ListItemButton>
+                </ListItem>
             </List>
         ))
     );

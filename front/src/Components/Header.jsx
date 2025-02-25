@@ -41,7 +41,7 @@ const Header = () => {
             <Stack direction="row" sx={{ gap: 1, alignItems: 'center' }}>
                 {path[1] === 'People' ? (<Search/>) : (<CustomDatePicker />)}
                 <IconButton 
-                onClick={() => path[1] === 'People' ? console.log(path) : searchWorkTime() }
+                onClick={() => path[1] === 'People' ? <></> : searchWorkTime() }
                 sx={{
                     borderRadius: '10px'
                 }}>
